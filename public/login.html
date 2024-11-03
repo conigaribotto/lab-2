@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Pacientes</title>
+    <link rel="stylesheet" href="stylelogin.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sección de inicio de sesión -->
+        <div class="login-section">
+            <img src="img/logo.png" alt="Logo" class="logo">
+            <h2>Iniciar Sesión</h2>
+            <form id="loginForm">
+                <label for="dni">D.N.I.</label>
+                <select id="dni">
+                    <option value="DNI">D.N.I.</option>
+                </select>
+                <input type="text" id="document" placeholder="Nro Documento">
+                
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" placeholder="Contraseña">
+                
+                <div class="checkbox">
+                    <input type="checkbox" id="terms">
+                    <label for="terms">Estoy de acuerdo con las condiciones y <a href="#">Políticas de Privacidad</a></label>
+                </div>
+
+                <button type="button" class="login-button" onclick="login()">INGRESAR</button>
+            </form>
+            <a href="#" class="forgot-password" onclick="forgotPassword()">¿Olvidó su contraseña?</a>
+            <p class="no-account">¿NO TIENES UNA CUENTA?</p>
+            <a href="#" class="single-turn">Sacá un turno solo</a>
+            
+            <!-- Botón para volver a la página principal -->
+            <a href="index.html" class="back-button">Volver a la página principal</a>
+        </div>
+
+        <!-- Sección de información del portal -->
+        <div class="info-section">
+            <h2>Portal Pacientes</h2>
+            <p>Desde aquí podrá <strong>obtener turnos</strong> para usted y su familia, <strong>consultar los turnos asignados</strong> y <strong>ver los resultados de sus estudios</strong>.</p>
+        </div>
+    </div>
+
+    <!-- Sección de scripts -->
+    <script src="index.js"></script>
+</body>
+</html>

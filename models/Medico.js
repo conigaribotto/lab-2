@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize= require('../config/db');
+const Usuario = require('./Usuario');
 
 const Medico = sequelize.define('Medico', {
     id_medico: {
@@ -23,7 +24,7 @@ const Medico = sequelize.define('Medico', {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'usuarios',
+            model: Usuario,
             key: 'id_usuario'
         }
     }

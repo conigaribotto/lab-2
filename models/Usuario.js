@@ -12,7 +12,7 @@ const Usuario = sequelize.define('Usuario', {
         allowNull: false
     },
     clave: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false
     },
     id_rol: {

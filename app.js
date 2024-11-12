@@ -4,9 +4,15 @@ const app = express();
 const sequelize = require('./config/db');
 const PORT = 3000;
 
+// Sincronizar modelos con la base de datos
+sequelize.sync()
+    .then(() => {
+        console.log("Conectado a la base de datos y modelos sincronizados.");
+    })
+    .catch(err => console.error("Error al sincronizar la base de datos:", err));
+
 // Servir archivos estáticos desde la carpeta "public"
 app.use(express.static(path.join(__dirname, 'public')));
-// Servir
 app.use('/node_modules', express.static(path.join(__dirname, 'node_modules')));
 
 // Ruta principal para servir el archivo HTML

@@ -13,12 +13,24 @@ const Usuario = require('./Usuario');
 
 
 // Definir asociaciones de cada modelo
-Medico.associations({ Medico, Especialidad, MedicoEspecialidad, Usuario, Horario });
-Especialidad.associations({ Medico, Especialidad, MedicoEspecialidad, Usuario, Horario });
-MedicoEspecialidad.associations({ Medico, Especialidad, MedicoEspecialidad, Usuario, Horario });
+const setAssociations = () => {
+AgendaTurno.associations({Medico, Clinica, Especialidad, Paciente});
+Dias.associations({Horario});
+Especialidad.associations({ Medico, MedicoEspecialidad});
+HistoriaClinica.associations({Medico, Paciente});
+Horario.associations({Medico, Clinica, Especialidad, Dias});
+Medico.associations({ Especialidad, MedicoEspecialidad, Usuario, Horario });
+MedicoEspecialidad.associations({ Medico, Especialidad, Usuario, Horario });
+Paciente.associations({Usuario});
+Sobreturno.associations({AgendaTurno, Paciente});
+};
+
+setAssociations();
+
 
 // Exportar los modelos
 module.exports = {
+  AgendaTurno, Dias, HistoriaClinica, Paciente, Sobreturno, Clinica,
   Medico,
   Especialidad,
   MedicoEspecialidad,

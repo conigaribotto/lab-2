@@ -3,17 +3,16 @@ const path = require('path');
 const app = express();
 const sequelize = require('./config/db');
 const PORT = 3000;
-const {Medico, Especialidad, MedicoEspecialidad} = require('./models')
-const MedicoControlador = require('./controllers/medicoControlador');
+const MedicoControlador = require('./controllers/MedicoControlador');
 
+MedicoControlador.getMedicos();
 // Sincronizar modelos con la base de datos
-sequelize.sync()
+/*sequelize.sync()
     .then(() => {
         console.log("Conectado a la base de datos y modelos sincronizados.");
-        MedicoControlador.getMedicos();
     })
     .catch(err => console.error("Error al sincronizar la base de datos:", err));
-
+*/
 // Servir archivos estáticos desde la carpeta "public"
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/node_modules', express.static(path.join(__dirname, 'node_modules')));

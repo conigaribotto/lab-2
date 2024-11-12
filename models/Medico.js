@@ -38,7 +38,7 @@ const Medico = sequelize.define('Medico', {
 
 Medico.associations= (models) => {
 Medico.belongsTo(models.Usuario, {foreignKey: 'id_usuario'});
-Medico.belongsToMany(models.MedicoEspecialidad, { through: MedicoEspecialidad, foreignKey: 'id_medico' });
+Medico.belongsToMany(models.Especialidad, { through: MedicoEspecialidad, foreignKey: 'id_medico' });
 Medico.hasMany(models.Horario, { foreignKey: 'id_medico' });
 };
 

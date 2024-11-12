@@ -1,12 +1,11 @@
-const {Medico, Especialidad, MedicoEspecialidad} = require('../models');
+const {Medico} = require('../models');
 
-const getMedicos = async () => {
+exports.getMedicos = async () => {
     try {
         const medicos = await Medico.findAll();
-        console.log(medicos);
+        console.log(medicos.map(medico => medico.dataValues));
     } catch (error) {
         console.error('Error al obtener los médicos:', error);
     }
 };
 
-getMedicos();

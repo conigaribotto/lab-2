@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize= require('../config/db');
 const Medico = require('./Medico');
-const MedicoEspecialidad = require('./MedicoEspecialidad');
+const MedicoEspecialidad = require('./MedicoEspecialidad.js');
 
 const Especialidad = sequelize.define('Especialidad', {
     id_especialidad: {
@@ -18,6 +18,7 @@ const Especialidad = sequelize.define('Especialidad', {
     timestamps:false
 });
 
-Especialidad.belongsToMany(Medico, { through: MedicoEspecialidad, foreignKey: 'id_especialidad' });
-
+Especialidad.associations = (models) => {
+Especialidad.belongsToMany(models.Medico, { through: MedicoEspecialidad, foreignKey: 'id_especialidad' });
+};
 module.exports= Especialidad;

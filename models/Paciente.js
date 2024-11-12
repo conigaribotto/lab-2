@@ -41,6 +41,8 @@ const Paciente = sequelize.define('Paciente', {
     timestamps:false
 });
 
-Paciente.belongsTo(Usuario, {foreignKey: 'id_usuario'});
+Paciente.associations = (models) => {
+Paciente.belongsTo(models.Usuario, {foreignKey: 'id_usuario'});
+};
 
 module.exports= Paciente;

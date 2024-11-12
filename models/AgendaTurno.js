@@ -64,9 +64,10 @@ const AgendaTurno = sequelize.define('AgendaTurno', {
     timestamps: false
 });
 
-AgendaTurno.belongsTo(Medico, { foreignKey: 'id_medico' });
-AgendaTurno.belongsTo(Clinica, { foreignKey: 'id_clinica' });
-AgendaTurno.belongsTo(Especialidad, { foreignKey: 'id_especialidad' });
-AgendaTurno.belongsTo(Paciente, { foreignKey: 'id_paciente' });
-
+AgendaTurno.associations = (models) => {
+AgendaTurno.belongsTo(models.Medico, { foreignKey: 'id_medico' });
+AgendaTurno.belongsTo(models.Clinica, { foreignKey: 'id_clinica' });
+AgendaTurno.belongsTo(models.Especialidad, { foreignKey: 'id_especialidad' });
+AgendaTurno.belongsTo(models.Paciente, { foreignKey: 'id_paciente' });
+};
 module.exports = AgendaTurno;

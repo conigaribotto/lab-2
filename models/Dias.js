@@ -17,6 +17,7 @@ const Dias = sequelize.define('Dias', {
     timestamps:false
 });
 
-Dias.belongsToMany(Horario, { through: 'horarios_dias', foreignKey: 'id_dia' });
-
+Dias.associations = (models) =>{
+Dias.belongsToMany(models.Horario, { through: 'horarios_dias', foreignKey: 'id_dia' });
+};
 module.exports= Dias;

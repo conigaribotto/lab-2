@@ -38,7 +38,8 @@ const HistoriaClinica = sequelize.define('HistoriaClinica', {
     timestamps: false
 });
 
-HistoriaClinica.belongsTo(Medico, { foreignKey: 'id_medico' });
-HistoriaClinica.belongsTo(Paciente, { foreignKey: 'id_paciente' });
-
+HistoriaClinica.associations = (models) =>{
+HistoriaClinica.belongsTo(models.Medico, { foreignKey: 'id_medico' });
+HistoriaClinica.belongsTo(models.Paciente, { foreignKey: 'id_paciente' });
+};
 module.exports = HistoriaClinica;

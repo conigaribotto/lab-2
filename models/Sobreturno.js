@@ -30,7 +30,8 @@ const Sobreturno = sequelize.define('Sobreturno', {
     timestamps:false
 });
 
-Sobreturno.belongsTo(AgendaTurno, {foreignKey: 'id_turno'});
-Sobreturno.belongsTo(Paciente, {foreignKey: 'id_paciente'});
-
+Sobreturno.associations = (models) =>{
+Sobreturno.belongsTo(models.AgendaTurno, {foreignKey: 'id_turno'});
+Sobreturno.belongsTo(models.Paciente, {foreignKey: 'id_paciente'});
+};
 module.exports= Sobreturno;

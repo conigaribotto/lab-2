@@ -3,11 +3,14 @@ const path = require('path');
 const app = express();
 const sequelize = require('./config/db');
 const PORT = 3000;
+const {Medico, Especialidad, MedicoEspecialidad} = require('./models')
+const MedicoControlador = require('./controllers/medicoControlador');
 
 // Sincronizar modelos con la base de datos
 sequelize.sync()
     .then(() => {
         console.log("Conectado a la base de datos y modelos sincronizados.");
+        MedicoControlador.getMedicos();
     })
     .catch(err => console.error("Error al sincronizar la base de datos:", err));
 

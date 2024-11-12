@@ -1,14 +1,17 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 
-const Medico = require('./Medico');
 const Especialidad = require('./Especialidad');
+const Medico = require('./Medico');
 
 const MedicoEspecialidad = sequelize.define('MedicoEspecialidad', {
-    matricula: {
+    id_especialidad: {
         type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
+        allowNull: false,
+        references: {
+            model: Especialidad,
+            key: 'id_especialidad'
+        }
     },
     id_medico: {
         type: DataTypes.INTEGER,
@@ -18,20 +21,19 @@ const MedicoEspecialidad = sequelize.define('MedicoEspecialidad', {
             key: 'id_medico'
         }
     },
-    id_especialidad: {
+    matricula: {
         type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: Especialidad,
-            key: 'id_especialidad'
-        }
-    }
+        primaryKey: true,
+        autoIncrement: true
+    },
 }, {
     tableName: 'medico_especialidad',
     timestamps: false
 });
 
-MedicoEspecialidad.belongsTo(Medico, {foreignKey: 'id_medico'});
-MedicoEspecialidad.belongsTo(Especialidad, { foreignKey: 'id_especialidad'});
+MedicoEspecialidad.associations = (models) => {
+MedicoEspecialidad.belongsTo(models.Especialidad, { foreignKey: 'id_especialidad'});
+MedicoEspecialidad.belongsTo(models.Medico, {foreignKey: 'id_medico'});
+};
 
 module.exports = MedicoEspecialidad;

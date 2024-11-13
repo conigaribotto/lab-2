@@ -4,6 +4,7 @@ const Medico = require('./Medico');
 const Especialidad = require('./Especialidad');
 const Clinica = require('./Clinica');
 const Dias = require('./Dias');
+const HorarioDias = require('./HorarioDias');
 
 const Horario = sequelize.define('Horario', {
     id_horario: {
@@ -34,10 +35,6 @@ const Horario = sequelize.define('Horario', {
             model: Especialidad,
             key: 'id_especialidad'
         }
-    },
-    dias_semana: {
-        type: DataTypes.STRING,
-        allowNull: false
     },
     hora_inicio: {
         type: DataTypes.TIME,
@@ -77,7 +74,7 @@ Horario.associations = (models) =>{
 Horario.belongsTo(models.Medico, { foreignKey: 'id_medico' });
 Horario.belongsTo(models.Clinica, { foreignKey: 'id_clinica' });
 Horario.belongsTo(models.Especialidad, { foreignKey: 'id_especialidad' });
-Horario.belongsToMany(models.Dias, { through: 'horarios_dias', foreignKey: 'id_horario' });
+Horario.belongsToMany(models.Dias, { through: HorarioDias, foreignKey: 'id_horario' });
 };
 
 module.exports = Horario;

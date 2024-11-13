@@ -16,7 +16,7 @@ const Clinica = sequelize.define('Clinica', {
         allowNull: false
     },
     telefono: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false
     }
 }, {

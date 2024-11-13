@@ -1,0 +1,41 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+  }
+  
+  /* Estilo para el encabezado */
+.header {
+    background-color: #007BFF; /* Azul claro */
+    padding: 20px 0; /* Espaciado en la parte superior e inferior */
+    text-align: center; /* Centra el contenido */
+    display: flex;
+    justify-content: center; /* Centra los botones dentro del encabezado */
+    gap: 20px; /* Espaciado entre los botones */
+  }
+  
+  .header button {
+    background-color: #007BFF; /* Fondo azul */
+    color: white; /* Texto blanco */
+    border: none; /* Eliminar borde */
+    font-size: 18px; /* Tamaño de fuente grande */
+    padding: 15px 30px; /* Espaciado dentro de los botones */
+    cursor: pointer; /* Cambiar el cursor a una mano */
+    border-radius: 5px; /* Bordes redondeados */
+    transition: background-color 0.3s ease; /* Transición suave para el cambio de color */
+  }
+  
+  .header button:hover {
+    background-color: #0056b3; /* Azul más oscuro al pasar el mouse */
+  }
+  
+  /* Estilo del calendario */
+  #calendar {
+    margin: 0 auto;
+    max-width: 900px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+  }

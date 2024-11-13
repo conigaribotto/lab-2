@@ -1,4 +1,4 @@
-const {Medico} = require('../models');
+const {Medico, Horario} = require('../models');
 
 exports.getMedicos = async () => {
     try {
@@ -8,4 +8,5 @@ exports.getMedicos = async () => {
         console.error('Error al obtener los médicos:', error);
     }
 };
+
 

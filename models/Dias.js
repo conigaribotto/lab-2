@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize= require('../config/db');
 const Horario= require('./Horario');
+const HorarioDias = require('./HorarioDias');
 
 const Dias = sequelize.define('Dias', {
     id_dia: {
@@ -18,6 +19,6 @@ const Dias = sequelize.define('Dias', {
 });
 
 Dias.associations = (models) =>{
-Dias.belongsToMany(models.Horario, { through: 'horarios_dias', foreignKey: 'id_dia' });
+Dias.belongsToMany(models.Horario, { through: HorarioDias, foreignKey: 'id_dia' });
 };
 module.exports= Dias;

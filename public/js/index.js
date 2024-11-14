@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   } catch (error) {
     console.error("Error al cargar especialidades:", error);
   }
-
+  // Escuchar cambios en el selector de especialidad
   especialidadSelect.addEventListener('change', function() {
     const especialidadId = especialidadSelect.value;
     if (especialidadId) {
@@ -36,16 +36,6 @@ document.addEventListener('DOMContentLoaded', async function () {
         calendar.removeAllEvents();
     }
 });
-
-  // Escuchar cambios en el selector de especialidad
-  especialidadSelect.addEventListener('change', function () {
-    const especialidadId = especialidadSelect.value;
-    if (especialidadId) {
-      cargarEventos(especialidadId);
-    } else {
-      calendar.removeAllEvents(); // Limpiar el calendario si no hay especialidad seleccionada
-    }
-  });
 
   // Renderizar el calendario
   calendar.render();
@@ -176,9 +166,13 @@ async function cargarTurnos(fechaSeleccionada) {
           turnoDiv.innerHTML = `
               <p><strong>Medico:</strong> ${turno.medico}</p>
               <p><strong>Hora:</strong> ${turno.inicio} - ${turno.fin}</p>
-              <button>Agendar turno</button>
+              <button class="btn-agendar-turno">Agendar turno</button>
           `;
           turnosContainer.appendChild(turnoDiv);
+      });
+
+      document.querySelectorAll('.btn-agendar-turno').forEach(button => {
+        button.addEventListener('click', mostrarModal);
       });
   });
 }
@@ -196,4 +190,73 @@ function obtenerNumeroDia(nombreDia) {
     };
     return diasSemana[nombreDia.toLowerCase()];
 }
+
+/////////////////////////Modal//////////////////////////////
+
+const modal = document.getElementById('modalAgendarTurno');
+const cancelarBtn = document.getElementById('cancelarBtn');
+const agendarBtn = document.getElementById('agendarBtn');
+const dniPacienteInput = document.getElementById('dniPaciente');
+
+// Función para mostrar y ocultarel modal
+function mostrarModal() {
+  const modal = document.getElementById('modalAgendarTurno');
+  modal.classList.add('visible');
+}
+function ocultarModal() {
+  modal.classList.remove('visible');
+  dniPacienteInput.value = ''; // Limpiar el campo DNI al cerrar
+}
+
+// Eventos de los botones
+cancelarBtn.addEventListener('click', function() {
+  ocultarModal(); // Oculta el modal
+  dniPacienteInput.value = ''; // Limpiar el campo DNI al cerrar el modal
+
+  // Eliminar el mensaje de error si existe
+  const mensajeError = dniPacienteInput.nextElementSibling; // Seleccionar el siguiente elemento (mensaje de error)
+  if (mensajeError && mensajeError.style.color === 'red') {
+    mensajeError.remove(); // Eliminar el mensaje de error
+  }
+});
+
+// Función para manejar el clic en el botón "Agendar turno"
+agendarBtn.addEventListener('click', async function () {
+  const dni = dniPacienteInput.value; // Obtener el DNI ingresado en el input
+
+  if (!dni) {
+    alert('Por favor, ingrese un DNI');
+    return;
+  }
+    //Eliminar msj de erro
+  const mensajeError = dniPacienteInput.nextElementSibling; // Seleccionar el siguiente elemento (mensaje de error)
+  if (mensajeError && mensajeError.style.color === 'red') {
+    mensajeError.remove(); // Eliminar el mensaje de error
+  }
+
+  try {
+    // Realizar la solicitud a la ruta de verificación de paciente
+    const response = await fetch(`/pacientes/verificar/${dni}`);
+    const data = await response.json();
+
+    // Verificar si el paciente existe
+    if (data.existe) {
+      // Si el paciente existe, mostrar el mensaje de confirmación
+      const confirmar = confirm(`Paciente encontrado: ${data.nombre}. ¿Desea agendar el turno?`);
+      
+      if (confirmar) {
+        // Aquí se puede proceder con la lógica para agendar el turno
+        // Puedes agregar el código necesario para agendar el turno, o cerrar el modal
+        alert('Turno agendado con éxito.');
+        ocultarModal();
+      }
+    } else {
+      // Si el paciente no existe, mostrar el mensaje de error
+      dniPacienteInput.insertAdjacentHTML('afterend', '<p style="color: red;">No existe paciente con ese DNI, contactese con administración.</p>');
+    }
+  } catch (error) {
+    console.error('Error al verificar el paciente:', error);
+    alert('Hubo un error al verificar el paciente. Intente de nuevo.');
+  }
+});
 

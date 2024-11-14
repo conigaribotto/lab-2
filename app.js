@@ -21,6 +21,8 @@ const especialidadesRoutes = require('./routes/especialidades');
 app.use('/especialidades', especialidadesRoutes);
 const horarioRoutes = require('./routes/horarios');
 app.use('/horarios', horarioRoutes);
+const pacienteRoutes = require('./routes/pacientes');
+app.use('/pacientes', pacienteRoutes);
 
 
 // Iniciar el servidor
@@ -44,10 +46,10 @@ app.listen(PORT, () => {
 
 
 
-
-
-
-
+/*   Ver Pacientes
+const {getPacientes} = require('./controllers/PacienteControlador');
+app.get('/verpacientes', getPacientes);
+*/
 
 
 /* Obtener Especialidades

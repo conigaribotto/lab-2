@@ -25,6 +25,26 @@ document.addEventListener('DOMContentLoaded', async function() {
       console.error("Error al cargar especialidades:", error);
     }
   
+    // Función para calcular la fecha correspondiente según el día de la semana
+    function calcularFechaConBase(fechaBase, diaSemana) {
+      const diasSemana = {
+        "lunes": 1,
+        "martes": 2,
+        "miercoles": 3,
+        "jueves": 4,
+        "viernes": 5,
+        "sabado": 6,
+        "domingo": 0
+      };
+      
+      const dia = fechaBase.getDay();  // Obtiene el día de la semana (0 - Domingo, 1 - Lunes, ...)
+      const diaObjetivo = diasSemana[diaSemana];  // El día que queremos encontrar (lunes, martes, etc.)
+      const diferencia = (diaObjetivo - dia + 7) % 7;  // Diferencia para ajustar la fecha
+      const fecha = new Date(fechaBase);
+      fecha.setDate(fechaBase.getDate() + diferencia);  // Ajustamos la fecha
+      return fecha;
+    }
+  
     // Cargar eventos según especialidad
     async function cargarEventos(especialidadId) {
       const response = await fetch(`/horarios/obtenerHorarios?id_especialidad=${especialidadId}`);
@@ -44,7 +64,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         // Verificar si los datos necesarios están presentes
         if (horaInicio && horaFin && fechaInicio && fechaFin && diasSemana.length > 0) {
           const eventosDelMedico = diasSemana.map(dia => {
-            let fecha = calcularFechaConBase(fechaInicio, dia); // Calcular fecha base para el día
+            let fecha = calcularFechaConBase(fechaInicio, dia);
 
             // Crear eventos solo si están dentro del rango de fecha
             const eventos = [];
@@ -95,32 +115,3 @@ document.addEventListener('DOMContentLoaded', async function() {
     // Renderizar el calendario
     calendar.render();
 });
-
-
-// Función para calcular la fecha correspondiente según el día de la semana
-function calcularFechaConBase(fechaBase, diaSemana) {
-    const diasSemana = {
-      "domingo": 6,
-      "lunes": 0,
-      "martes": 1,
-      "miercoles": 2,
-      "jueves": 3,
-      "viernes": 4,
-      "sabado": 5
-    };
-
-    const dia = fechaBase.getDay();  // Obtiene el día de la semana (0 - Domingo, 1 - Lunes, ...)
-    const diaObjetivo = diasSemana[diaSemana];  // El día que queremos encontrar (lunes, martes, etc.)
-
-    // Calcular la diferencia en días
-    let diferencia = diaObjetivo - dia;
-    
-    // Si el día objetivo es anterior al día de la semana actual, sumamos 7 días
-    if (diferencia < 0) {
-        diferencia += 7;
-    }
-    
-    const fecha = new Date(fechaBase);
-    fecha.setDate(fechaBase.getDate() + diferencia);  // Ajustamos la fecha
-    return fecha;
-}

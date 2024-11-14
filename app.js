@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const router = express.Router();
 const app = express();
 const sequelize = require('./config/db');
 const PORT = 3000;
@@ -10,10 +11,17 @@ app.set('views', path.join(__dirname, 'views'));
 
 // Servir archivos estáticos desde "public"
 app.use(express.static(path.join(__dirname, 'public')));
-
+ 
+//rutas
 const indexRoutes = require('./routes/index');
-
 app.use('/', indexRoutes);
+
+
+const especialidadesRoutes = require('./routes/especialidades');
+app.use('/especialidades', especialidadesRoutes);
+const horarioRoutes = require('./routes/horarios');
+app.use('/horarios', horarioRoutes);
+
 
 // Iniciar el servidor
 app.listen(PORT, () => {
@@ -42,9 +50,10 @@ app.listen(PORT, () => {
 
 
 
-
-
-
+/* Obtener Especialidades
+const { obtenerEspecialidades } = require('./controllers/EspecialidadControlador');
+app.get('/obtenerEspecialidades', obtenerEspecialidades);
+*/
 
 
 
@@ -54,6 +63,8 @@ app.get('/api/horarios', obtenerHorarios);
 
 /// ir a  http://localhost:3000/api/horarios?id_especialidad=1&id_medico=4
 */
+
+
 
 /* ///////// Agregar Horarios
 const HorarioControlador = require('./controllers/HorarioControlador');

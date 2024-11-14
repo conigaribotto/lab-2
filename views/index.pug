@@ -1,22 +1,18 @@
-doctype html
 html(lang='es')
   head
     meta(charset='utf-8')
     title Calendario de Turnos
-    script(src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js')
+    script(src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js')  // FullCalendar CDN
     link(rel='stylesheet', href='/css/styles.css')
   body
-    // incluir encabezado de otro pug
     include partials/_header
+
+    // Selector de especialidad
+    label(for='especialidad') Selecciona una especialidad:
+    select#especialidad(name='especialidad')
+      option(value='') -- Selecciona --
 
     // Calendario
     div#calendar
 
-    script.
-      document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-          initialView: 'dayGridMonth'
-        });
-        calendar.render();
-      });
+    script(src='/js/index.js')

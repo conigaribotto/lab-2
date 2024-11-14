@@ -48,7 +48,12 @@ app.listen(PORT, () => {
 
 
 
+/*  Obtener Horarios
+const {obtenerHorarios} = require('./controllers/HorarioControlador');
+app.get('/api/horarios', obtenerHorarios);
 
+/// ir a  http://localhost:3000/api/horarios?id_especialidad=1&id_medico=4
+*/
 
 /* ///////// Agregar Horarios
 const HorarioControlador = require('./controllers/HorarioControlador');

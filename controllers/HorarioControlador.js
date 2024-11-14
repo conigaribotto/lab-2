@@ -1,4 +1,4 @@
-const { Horario, Dias} = require('../models');
+const { Horario, Medico, Especialidad, Clinica, Dias} = require('../models');
 const sequelize = require('../config/db');
 
 exports.crearHorario = async (datosHorario, dias) => {
@@ -26,5 +26,38 @@ exports.crearHorario = async (datosHorario, dias) => {
         await transaction.rollback();  // Para revertir cambios si hay error
         console.error('Error al crear el horario:', error);
         throw error;
+    }
+};
+
+exports.obtenerHorarios = async (req, res) => {
+    try {
+        const { id_especialidad, id_medico } = req.query;
+
+        // Se construye la condición de filtrado
+        const whereConditions = {
+            id_especialidad: id_especialidad
+        };
+
+        // Si se especifica el id_medico, se agrega al filtro
+        if (id_medico) {
+            whereConditions.id_medico = id_medico;
+        }
+
+        // Consultamos los horarios con los filtros
+        const horarios = await Horario.findAll({
+            where: whereConditions,
+            include: [
+                { model: Medico },
+                { model: Especialidad },
+                { model: Clinica },
+                { model: Dias, through: { attributes: [] } } // Solo los días asociados, sin columnas intermedias
+            ]
+        });
+
+        // Devolvemos los resultados
+        return res.json(horarios);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: 'Error al obtener los horarios' });
     }
 };

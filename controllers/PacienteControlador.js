@@ -1,4 +1,4 @@
-const {Paciente} = require('../models');
+const { Paciente } = require('../models');
 
 exports.getPacientes = async () => {
     try {
@@ -15,7 +15,7 @@ exports.verificarPacientePorDNI = async (req, res) => {
     try {
         const paciente = await Paciente.findOne({ where: { dni } });
         if (paciente) {
-            res.json({ existe: true, nombre: `${paciente.nombre} ${paciente.apellido}` });
+            res.json({ existe: true, nombre: `${paciente.nombre} ${paciente.apellido}`, id: `${paciente.id_paciente}`});
         } else {
             res.json({ existe: false });
         }

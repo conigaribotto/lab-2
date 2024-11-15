@@ -15,14 +15,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 //rutas
 const indexRoutes = require('./routes/index');
 app.use('/', indexRoutes);
-
-
 const especialidadesRoutes = require('./routes/especialidades');
 app.use('/especialidades', especialidadesRoutes);
 const horarioRoutes = require('./routes/horarios');
 app.use('/horarios', horarioRoutes);
 const pacienteRoutes = require('./routes/pacientes');
 app.use('/pacientes', pacienteRoutes);
+const agendaTurnoRoutes = require('./routes/agendaTurno');
+app.use('/agenda', agendaTurnoRoutes);
+
 
 
 // Iniciar el servidor

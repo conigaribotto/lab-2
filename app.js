@@ -4,6 +4,8 @@ const router = express.Router();
 const app = express();
 const sequelize = require('./config/db');
 const PORT = 3000;
+app.use(express.urlencoded({ extended: true }));
+
 
 // Definir uso de PUG y en que carpeta estan
 app.set('view engine', 'pug');

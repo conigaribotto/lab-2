@@ -1,0 +1,55 @@
+doctype html
+html(lang='es')
+  head
+    meta(charset='utf-8')
+    title Administrador - Gestión de Médicos
+    link(rel='stylesheet', href='/css/styleadm.css')
+  body
+    // Header
+    include partials/_header
+    header
+      h1 Gestión de Médicos
+
+    // Lista de Médicos Registrados
+    h2 Listado de Médicos Registrados
+
+    // Lista desplegable de médicos
+    label(for='medicoSelect') Selecciona un Médico:
+    select#medicoSelect(name='medico')
+      option(value='') -- Selecciona un Médico --
+      each medico in medicos
+        option(value=medico.id_medico) #{medico.nombre} #{medico.apellido}
+
+    // Botones de acción para el médico seleccionado
+    div.botones-acciones(style='display: none;' id='accionesMedico')
+      a(href='/administrador/alta-medico')
+        button#alta-medico Dar de Alta Médico
+      a(href='#' id='modificarMedicoLink')
+        button#modificar-medico Modificar Médico
+      form(method='POST', action='/administrador/eliminar-medico' onsubmit='return confirm("¿Estás seguro de que deseas eliminar este médico?");')
+        input(type='hidden', name='id_medico', value='')
+        button#eliminar-medico(type='submit') Eliminar Médico
+      a(href='#' id='gestionarEspecialidadLink')
+        button#gestionar-especialidad Gestionar Especialidad
+
+    script.
+      // Mostrar los botones solo cuando se seleccione un médico
+      document.getElementById('medicoSelect').addEventListener('change', function() {
+        var botones = document.getElementById('accionesMedico');
+        var modificarLink = document.getElementById('modificarMedicoLink');
+        var gestionarEspecialidadLink = document.getElementById('gestionarEspecialidadLink');  // Link para gestionar especialidad
+        var eliminarForm = document.querySelector('form[action="/administrador/eliminar-medico"] input[name="id_medico"]');
+        
+        if (this.value) {
+          botones.style.display = 'block';  // Mostrar los botones si se seleccionó un médico
+          // Actualizar el enlace del botón de "Modificar Médico" y el valor del hidden input para "Eliminar Médico"
+          modificarLink.href = '/administrador/editar-medico/' + this.value;
+          gestionarEspecialidadLink.href = '/administrador/gestionar-especialidad/' + this.value;  // Actualizar link de gestionar especialidad
+          eliminarForm.value = this.value;  // Set the ID for the deletion form
+        } else {
+          botones.style.display = 'none';  // Ocultar los botones si no se ha seleccionado ningún médico
+          modificarLink.href = '#';
+          gestionarEspecialidadLink.href = '#';
+          eliminarForm.value = '';  // Clear the ID when no doctor is selected
+        }
+      }); 

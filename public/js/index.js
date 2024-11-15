@@ -289,6 +289,7 @@ agendarBtn.addEventListener('click', async function () {
       console.log(data);
       const confirmar = confirm(`Paciente encontrado: ${data.nombre}. ¿Desea agendar el turno?`);
       if (confirmar && turnoSeleccionado) {
+        // pruebas en consola
         console.log('Datos para agendar el turno:', {
           id_medico: turnoSeleccionado.id_medico,
           id_especialidad: turnoSeleccionado.id_especialidad,
